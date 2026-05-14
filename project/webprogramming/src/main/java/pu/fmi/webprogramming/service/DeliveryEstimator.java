@@ -29,6 +29,25 @@ public class DeliveryEstimator {
     // * Не променяйте тестовете
     // * Не променяйте сигнатурата на метода
 
-    return null;
+    LocalDateTime createdAt = delivery.getCreatedAt();
+
+    String warehouseCity = delivery.getWarehouse().getCity();
+    String customerCity = delivery.getCustomer().getCity();
+
+    int daysToAdd;
+
+    if(warehouseCity.equals(customerCity)) {
+      daysToAdd = 1;
+    } else {
+      daysToAdd = 3;
+    }
+
+    LocalDateTime estimatedDate = createdAt.plusDays(daysToAdd);
+
+    if (delivery.getCourier() == null) {
+      estimatedDate = estimatedDate.plusDays(2);
+    }
+
+    return estimatedDate;
   }
 }
